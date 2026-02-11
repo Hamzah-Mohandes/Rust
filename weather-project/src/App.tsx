@@ -1,17 +1,20 @@
-import reactLogo from './assets/react.svg'
-import { useState } from 'react'
-import viteLogo from '/vite.svg'
+// App.tsx
+import { getWeather } from './api';
+import { useQuery } from '@tanstack/react-query';
 
 function App() {
-  const [count, setCount] = useState(0)
-
+  const { data } = useQuery({
+    queryKey: ['weather', 50, 50], // Beispielkoordinaten
+    queryFn: () => getWeather({ lat: 50, lon: 50 }),
+  });
   return (
-    <>
-      <h1>
-        Hello World
-      </h1>
-    </>
+    <div>
+      <h1>Weather App</h1>
+      <h2>Current Weather:</h2>
+      <pre>{JSON.stringify(data, null, 3)}</pre>
+
+    </div >
   )
 }
 
-export default App
+export default App;
